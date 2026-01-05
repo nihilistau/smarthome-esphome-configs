@@ -1,0 +1,21 @@
+# =============================================================================
+# Zone 2 LD2450 Node Configuration
+# Built with scripts/run_esphome.ps1 to avoid VS Code command mangling.
+# =============================================================================
+
+# --- Substitutions ----------------------------------------------------------
+substitutions:
+  device_id: "mmwave-zone-2"
+  friendly_name: "Zone 2 Radar"
+  esp32_board: "esp32-c3-devkitm-1"
+  ld2450_tx_pin: "GPIO21"
+  ld2450_rx_pin: "GPIO20"
+  target_refresh_interval: "250ms"
+  room_width_mm: "4500"
+  room_depth_mm: "4200"
+  sensor_origin_x_mm: "2250"
+  sensor_origin_y_mm: "200"
+
+# --- Shared packages --------------------------------------------------------
+packages:
+  ld2450_multizone: !include packages/ld2450_multizone.yaml

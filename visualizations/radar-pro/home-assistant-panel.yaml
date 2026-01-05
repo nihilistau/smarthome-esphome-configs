@@ -1,0 +1,6 @@
+# Merge into configuration.yaml (or include via !include)
+panel_iframe:
+  radar_pro:
+    title: Radar Pro
+    icon: mdi:radar
+    url: /local/radar-pro/index.html

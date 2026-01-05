@@ -1,0 +1,39 @@
+# Radar card quickstart
+
+This file now documents the custom card setup introduced in `visualizations/lovelace/radar-multi-card`. Skip the template-sensor gymnastics—the card parses the JSON text sensors directly.
+
+## 1. Register the resource
+```yaml
+url: /local/radar-multi-card.js
+type: module
+```
+
+## 2. Example Lovelace card
+```yaml
+- type: custom:radar-multi-card
+  title: Upstairs Coverage
+  sensors:
+    - name: Zone 1 • Bedroom
+      entity: sensor.mmwave_zone_1_target_snapshot
+      room_width_mm: 4200
+      room_depth_mm: 3600
+      sensor_origin_x_mm: 2100
+      sensor_origin_y_mm: 150
+      image: /local/floorplans/bedroom.png
+    - name: Zone 2 • Office
+      entity: sensor.mmwave_zone_2_target_snapshot
+      room_width_mm: 4500
+      room_depth_mm: 4200
+      sensor_origin_x_mm: 2250
+      sensor_origin_y_mm: 200
+      accent: "#ff6df5"
+      history_points: 80
+      history_window_ms: 60000
+```
+
+### Tips
+- `entity` should reference the ESPHome text sensor created by `ld2450_multizone.yaml` (default `sensor.mmwave_zone_X_target_snapshot`).
+- Geometry overrides keep the card scaled even if you change firmware numbers later.
+- Drop optional PNGs next to `www/` and point `image:` to `/local/...` for translucent floor plans.
+- Set `show_velocity: false` per sensor if you only want distances.
+- The card now stores/plots per-target trails inside HA; adjust `history_points`/`history_window_ms` for longer or shorter paths.

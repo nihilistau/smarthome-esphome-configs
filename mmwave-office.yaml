@@ -1,0 +1,6 @@
+# Deprecated alias — kept for backwards compatibility.
+# Please switch to `mmwave-zone-2.yaml` going forward.
+#
+# Usage: esphome run mmwave-zone-2.yaml --device COM13
+
+<<: !include mmwave-zone-2.yaml

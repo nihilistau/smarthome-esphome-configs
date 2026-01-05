@@ -1,0 +1,6 @@
+# Deprecated alias — kept for backwards compatibility.
+# Please switch to `mmwave-tracking.yaml` (Zone 1) going forward.
+#
+# Usage: esphome run mmwave-tracking.yaml --device COM9
+
+<<: !include mmwave-tracking.yaml

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Radar Pro • Immersive Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script defer src="https://cdn.jsdelivr.net/npm/three@0.161/build/three.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/three@0.161/examples/js/controls/OrbitControls.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="title-block">
+        <p class="eyebrow">LD2450 • ESP32-C3</p>
+        <h1 id="view-title">Radar Operations Console</h1>
+        <p class="subhead" id="active-node-label">Waiting for nodes…</p>
+      </div>
+      <div class="header-controls">
+        <div class="node-picker">
+          <label for="node-select">Node</label>
+          <select id="node-select"></select>
+        </div>
+        <div class="status">
+          <span id="connection-dot"></span>
+          <span id="connection-label">Connecting…</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div>
+        <p class="label">Targets</p>
+        <p class="value" id="target-count">0</p>
+      </div>
+      <div>
+        <p class="label">Last update</p>
+        <p class="value" id="last-update">–</p>
+      </div>
+      <div>
+        <p class="label">Latency</p>
+        <p class="value" id="latency">–</p>
+      </div>
+      <div>
+        <p class="label">Mode</p>
+        <div class="toggle-group">
+          <button class="toggle active" data-mode="plan">Plan</button>
+          <button class="toggle" data-mode="isometric">Iso</button>
+          <button class="toggle" data-mode="velocity">Velocity</button>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <article class="panel">
+        <canvas id="plan-canvas" width="900" height="600"></canvas>
+        <div class="overlay">
+          <img id="floorplan" alt="Floor plan" />
+        </div>
+      </article>
+      <article class="panel" id="scene-wrapper">
+        <canvas id="scene"></canvas>
+      </article>
+    </main>
+
+    <footer>
+      <div>
+        <p class="label">Snapshot endpoint</p>
+        <code id="endpoint-display"></code>
+      </div>
+      <div>
+        <p class="label">Tips</p>
+        <ul>
+          <li>Drop a floorplan PNG next to this file and set its name in <code>app.js</code>.</li>
+          <li>Host via Home Assistant <code>/local/</code> or any static server.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="label">Nodes</p>
+        <ul id="node-list" class="node-list"></ul>
+      </div>
+    </footer>
+  </body>
+</html>
