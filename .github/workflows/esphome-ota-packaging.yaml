@@ -1,0 +1,48 @@
+name: ESPHome OTA Packaging
+
+on:
+  workflow_dispatch:
+    inputs:
+      configs:
+        description: 'Comma-separated list of ESPHome configs to build (default: mmwave-zone-2.yaml,mmwave-tracking.yaml)'
+        required: false
+        default: 'mmwave-zone-2.yaml,mmwave-tracking.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CONFIGS: ${{ github.event.inputs.configs || 'mmwave-zone-2.yaml,mmwave-tracking.yaml' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ESPHome
+        run: |
+          python -m pip install --upgrade pip
+          pip install esphome
+
+      - name: Build firmware
+        id: build
+        run: |
+          set -euo pipefail
+          IFS=',' read -ra CFGS <<<"$CONFIGS"
+          mkdir -p artifacts
+          for cfg in "${CFGS[@]}"; do
+            cfg_trimmed=$(echo "$cfg" | xargs)
+            echo "::group::Compiling $cfg_trimmed"
+            esphome compile "$cfg_trimmed" --secrets scripts/ci-secrets.yaml
+            cp -R .esphome/build/$(basename "$cfg_trimmed" .yaml) artifacts/"$cfg_trimmed" || true
+            echo "::endgroup::"
+          done
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esphome-firmware
+          path: artifacts

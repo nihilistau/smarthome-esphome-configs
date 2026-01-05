@@ -28,10 +28,12 @@ A curated collection of ESPHome firmware definitions, custom components, and vis
 | `docs/agents.md` | Playbook for humans/AI agents contributing to this repo. |
 | `docs/rules.md` | Lightweight rules of engagement, coding standards, and review expectations. |
 
-## Tooling
+## Tooling & automation
 
 - **PowerShell helpers** – all CLI entry points live under `scripts/`. The `run_esphome.ps1` wrapper should be preferred over hand-written commands, especially when instructions originate from VS Code/Copilot chats.
-- **CI validation** – `.github/workflows/esphome-validation.yaml` installs ESPHome and runs `esphome config --secrets scripts/ci-secrets.yaml` against key node definitions on every push/PR.
+- **Linting** – `.github/workflows/lint.yaml` runs [`yamllint`](https://yamllint.readthedocs.io) with the repo-wide `.yamllint.yaml` ruleset. Add new YAML files confidently knowing CI will flag formatting problems.
+- **Config validation** – `.github/workflows/esphome-validation.yaml` installs ESPHome and runs `esphome config --secrets scripts/ci-secrets.yaml` against key node definitions on every push/PR.
+- **OTA packaging** – `.github/workflows/esphome-ota-packaging.yaml` can be triggered manually to compile firmware for selected configs and publish the binaries as workflow artifacts (useful for field flashing without a local toolchain).
 - **Agent documentation** – see `docs/agents.md` for tips on how to structure TODO lists, logging, and tool usage.
 
 ## Contributing
